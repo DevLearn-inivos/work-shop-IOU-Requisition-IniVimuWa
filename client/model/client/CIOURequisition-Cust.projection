@@ -1,0 +1,43 @@
+projection CIOURequisition;
+component CLIENT;
+layer Cust;
+description "";
+category Users;
+
+--------------------------------- FRAGMENTS ---------------------------------
+
+----------------------------- MAIN ENTRY POINTS -----------------------------
+ -- (+) 240829 IniVimuWa  (START)
+entityset IOURequisitions for IOURequisition;
+entityset IOURequisitionLines for IOURequisitionLine;
+entityset IOURequisitionBodies for IOURequisitionBody;
+ -- (+) 240829 IniVimuWa  (END)
+
+
+
+
+------------------------------ ENTITY DETAILS -------------------------------
+
+
+------------------------------- ENUMERATIONS --------------------------------
+
+
+---------------------------------- QUERIES ----------------------------------
+
+
+---------------------------------- ACTIONS ----------------------------------
+
+
+--------------------------------- FUNCTIONS ---------------------------------
+
+
+-------------------------------- STRUCTURES ---------------------------------
+
+
+--------------------------------- VIRTUALS ----------------------------------
+
+
+--------------------------------- SUMMARIES ---------------------------------
+
+
+-------------------------------- SINGLETONS ---------------------------------
