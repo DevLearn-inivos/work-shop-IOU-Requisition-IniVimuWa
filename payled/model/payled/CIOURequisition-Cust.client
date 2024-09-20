@@ -29,6 +29,7 @@ page IouRequisitionPage using IOURequisitionSet {
 
 
 page IouRequisitionLinePage using IOURequisitionLineSet {
+
    list IouRequisitionLineList;
 }
 
@@ -49,17 +50,24 @@ selector CashAccSelector for CashAccount {
    static InstituteId;
    static Description;
 }
+@DynamicComponentDependency PERSON
+selector RequestedBySelector for CompanyPerson {
+   static Fname;
+   static Lname;
+}
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
 
    label = "Main Info";
-
    lov CashAccountRef with CashAccSelector {
-
       size = Medium;
    }
    field BranchManager;
-   field RequestedBy;
+
+   @DynamicComponentDependency PERSON
+   lov RequestedByRef with RequestedBySelector {
+      size = Medium;
+   }
    field CIouAmount;
    field Description;
    field CIouDate;
@@ -67,13 +75,7 @@ group CIOURequisitionGroup for CIouRequisition {
    field Status;
    field Site;
    field FloatAmount;
-
 }
-
-
-//group Test for CashAccount {
-//   field CashAccRef;
-//}
 group TotalmountsGroup for CIouRequisition {
 
    label = "Total Amounts ";
@@ -83,7 +85,6 @@ group TotalmountsGroup for CIouRequisition {
    field OverUtilizedAmount {
       visible = [OverUtilizedAmount > 0];
       editable = [false];
-
    }
    field UnderUtilizedAmount {
       visible = [UnderUtilizedAmount < 0];

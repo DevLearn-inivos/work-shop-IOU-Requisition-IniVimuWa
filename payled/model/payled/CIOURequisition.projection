@@ -22,6 +22,11 @@ entity CIouRequisition {
       label = "Cash Accounts";
    }
 
+   @DynamicComponentDependency PERSON
+   reference RequestedByRef(RequestedBy) to CompanyPerson(EmpNo) {
+      label = "Requested By";
+   }
+
    array CIouRequisitionArray(CashAc) to CIouRequisitionLine(CashAc);
 
    attribute TotalSpentAmount Number {
