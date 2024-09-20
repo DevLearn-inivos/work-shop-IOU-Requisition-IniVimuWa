@@ -1,0 +1,128 @@
+client CIOURequisition;
+component PAYLED;
+layer Cust;
+description "";
+
+--------------------------------- FRAGMENTS ---------------------------------
+
+----------------------------- NAVIGATOR ENTRIES -----------------------------
+navigator {
+
+   entry CIOURequisitionNav parent PayledNavigator.CashBoxAnalysisSubMenu at index 1000 {
+      label = "IOU Requisition";
+      page IouRequisitionPage;
+   }
+}
+-------------------------------- MAIN PAGES ---------------------------------
+page IouRequisitionPage using IOURequisitionSet {
+
+   label = "IOU Requisition";
+   selector CIOURequisitionSelector;
+   group CIOURequisitionGroup bind CIOURequisitionSelector;
+   group TotalmountsGroup;
+  -- group TotalmountsGroup;
+   list IouRequisitionLineList(CIouRequisitionArray)bind CIOURequisitionSelector;
+   //list CashAccountsList;
+
+   //bind CIOURequisitionSelector;
+}
+
+
+page IouRequisitionLinePage using IOURequisitionLineSet {
+   list IouRequisitionLineList;
+}
+
+--------------------------------- COMMANDS ----------------------------------
+
+
+--------------------------------- SELECTORS ---------------------------------
+selector CIOURequisitionSelector for CIouRequisition {
+
+   label = "Cash A/C - ${CashAc}";
+   field CashAc;
+   field BranchManager;
+   field CIouAmount;
+}
+//selector CashAccountSelector for CashAccount {
+//}
+selector CashAccSelector for CashAccount {
+   static InstituteId;
+   static Description;
+}
+---------------------------------- GROUPS -----------------------------------
+group CIOURequisitionGroup for CIouRequisition {
+
+   label = "Main Info";
+
+   lov CashAccountRef with CashAccSelector {
+
+      size = Medium;
+   }
+   field BranchManager;
+   field RequestedBy;
+   field CIouAmount;
+   field Description;
+   field CIouDate;
+   field CIouNumber;
+   field Status;
+   field Site;
+   field FloatAmount;
+
+}
+
+
+//group Test for CashAccount {
+//   field CashAccRef;
+//}
+group TotalmountsGroup for CIouRequisition {
+
+   label = "Total Amounts ";
+   field TotalSpentAmount {
+      editable = [false];
+   }
+   field OverUtilizedAmount {
+      visible = [OverUtilizedAmount > 0];
+      editable = [false];
+
+   }
+   field UnderUtilizedAmount {
+      visible = [UnderUtilizedAmount < 0];
+      editable = [false];
+   }
+}
+----------------------------------- LISTS -----------------------------------
+list IouRequisitionLineList for CIouRequisitionLine {
+   label = "Settlement";
+   field TransactionType;
+   field TransactionDate;
+   field GlAccount;
+   field Payer;
+   field Description;
+   field InvoiceNo;
+   field Amount;
+}
+---------------------------------- DIALOGS ----------------------------------
+
+
+-------------------------------- SINGLETONS ---------------------------------
+
+
+---------------------------------- CHARTS -----------------------------------
+
+
+--------------------------------- CALENDERS ---------------------------------
+
+
+---------------------------------- SHEETS -----------------------------------
+
+
+----------------------------- STATE INDICATORS ------------------------------
+
+
+----------------------------------- TREES -----------------------------------
+
+
+---------------------------------- PLUGINS ----------------------------------
+
+
+------------------------------- IMAGE VIEWERS -------------------------------

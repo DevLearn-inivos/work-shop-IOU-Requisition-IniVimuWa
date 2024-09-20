@@ -1,0 +1,78 @@
+projection CIOURequisition;
+component PAYLED;
+layer Cust;
+description " ";
+category Users;
+
+--------------------------------- FRAGMENTS ---------------------------------
+
+----------------------------- MAIN ENTRY POINTS -----------------------------
+entityset IOURequisitionSet for CIouRequisition;
+entityset IOURequisitionLineSet for CIouRequisitionLine;
+
+
+------------------------------ ENTITY DETAILS -------------------------------
+@Override
+entity CIouRequisition {
+
+
+   //   attribute InstituteId Text;
+
+   reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
+      label = "Cash Accounts";
+   }
+
+   array CIouRequisitionArray(CashAc) to CIouRequisitionLine(CashAc);
+
+   attribute TotalSpentAmount Number {
+      format = ifscurrency;
+      fetch = "C_Iou_Requisition_API.Get_Total_Spent_Amount(cash_ac)";
+      updatable = [false];
+
+
+
+   }
+   attribute OverUtilizedAmount Number {
+      format = ifscurrency;
+      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(cash_ac)";
+      --insertable = [false];
+      updatable = [false];
+   }
+   attribute UnderUtilizedAmount Number {
+      format = ifscurrency;
+      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(cash_ac)";
+      --insertable = [false];
+      updatable = [false];
+   }
+}
+//@Override
+//entity CashAccount {
+//   crud = Update;
+//   reference CashAccRef(InstituteId) to CashAccount(InstituteId) {
+//      label = "Cash Accounts";
+//   }
+//}
+
+
+------------------------------- ENUMERATIONS --------------------------------
+
+
+---------------------------------- QUERIES ----------------------------------
+
+
+---------------------------------- ACTIONS ----------------------------------
+
+
+--------------------------------- FUNCTIONS ---------------------------------
+
+
+-------------------------------- STRUCTURES ---------------------------------
+
+
+--------------------------------- VIRTUALS ----------------------------------
+
+
+--------------------------------- SUMMARIES ---------------------------------
+
+
+-------------------------------- SINGLETONS ---------------------------------
