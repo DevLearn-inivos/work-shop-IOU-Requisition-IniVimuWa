@@ -58,6 +58,26 @@ BEGIN
    RETURN utilized_amount_ ;
 END Get_Utilized_Amount;
   -- (+) 240918 InivimuWa (FINISH)
+  
+  -- (+) 240923 InivimuWa (START)
+FUNCTION Get_Branch_Manager RETURN VARCHAR2 
+IS
+   branch_manager_id_ VARCHAR2(100);
+   
+   CURSOR Get_Branch_Managers IS
+      SELECT t.userid 
+      FROM user_default t 
+      WHERE t.objkey = (SELECT ud.rowkey FROM user_default_cft ud WHERE ud.cf$_c_branch_manager = 'TRUE');
+   
+BEGIN
+   OPEN Get_Branch_Managers;
+   FETCH Get_Branch_Managers INTO branch_manager_id_;
+   CLOSE Get_Branch_Managers;
+   
+   RETURN branch_manager_id_;
+ 
+END Get_Branch_Manager;
+  -- (+) 240923 InivimuWa (FINISH)
    
    
    -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------

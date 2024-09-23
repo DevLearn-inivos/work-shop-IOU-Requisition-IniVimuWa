@@ -15,27 +15,19 @@ entityset IOURequisitionLineSet for CIouRequisitionLine;
 @Override
 entity CIouRequisition {
 
-
-   //   attribute InstituteId Text;
-
    reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
       label = "Cash Accounts";
    }
-
    @DynamicComponentDependency PERSON
    reference RequestedByRef(RequestedBy) to CompanyPerson(EmpNo) {
       label = "Requested By";
    }
-
    array CIouRequisitionArray(CashAc) to CIouRequisitionLine(CashAc);
 
    attribute TotalSpentAmount Number {
       format = ifscurrency;
       fetch = "C_Iou_Requisition_API.Get_Total_Spent_Amount(cash_ac)";
       updatable = [false];
-
-
-
    }
    attribute OverUtilizedAmount Number {
       format = ifscurrency;
@@ -50,13 +42,6 @@ entity CIouRequisition {
       updatable = [false];
    }
 }
-//@Override
-//entity CashAccount {
-//   crud = Update;
-//   reference CashAccRef(InstituteId) to CashAccount(InstituteId) {
-//      label = "Cash Accounts";
-//   }
-//}
 
 
 ------------------------------- ENUMERATIONS --------------------------------

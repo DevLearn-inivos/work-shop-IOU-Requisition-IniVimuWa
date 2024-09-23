@@ -67,8 +67,6 @@ group CIOURequisitionGroup for CIouRequisition {
    @DynamicComponentDependency PERSON
    lov RequestedByRef with RequestedBySelector {
       size = Medium;
- 
-
 
    }
    field CIouAmount;
