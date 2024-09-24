@@ -13,7 +13,11 @@
 layer Cust;
 
 -------------------- PUBLIC DECLARATIONS ------------------------------------
-
+-- (+) 240924 InivimuWa (START)
+TYPE Branch_Manager_Rec_ IS RECORD
+   (branch_manager VARCHAR2(100)
+   );
+-- (+) 240924 InivimuWa (FINISH)
 -------------------- PRIVATE DECLARATIONS -----------------------------------
 
 
@@ -60,9 +64,9 @@ END Get_Utilized_Amount;
   -- (+) 240918 InivimuWa (FINISH)
   
   -- (+) 240923 InivimuWa (START)
-FUNCTION Get_Branch_Manager RETURN VARCHAR2 
+FUNCTION Get_Branch_Manager___ RETURN Branch_Manager_Rec_ 
 IS
-   branch_manager_id_ VARCHAR2(100);
+   branch_manager_id_ Branch_Manager_Rec_;
    
    CURSOR Get_Branch_Managers IS
       SELECT t.userid 
@@ -76,7 +80,7 @@ BEGIN
    
    RETURN branch_manager_id_;
  
-END Get_Branch_Manager;
+END Get_Branch_Manager___;
   -- (+) 240923 InivimuWa (FINISH)
    
    

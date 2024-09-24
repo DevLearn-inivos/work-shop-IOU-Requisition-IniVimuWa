@@ -92,6 +92,8 @@ group TotalmountsGroup for CIouRequisition {
       editable = [false];
    }
 }
+
+
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
