@@ -22,27 +22,28 @@ entity CIouRequisition {
    reference RequestedByRef(RequestedBy) to CompanyPerson(EmpNo) {
       label = "Requested By";
    }
-   array CIouRequisitionArray(CashAc) to CIouRequisitionLine(CashAc);
+   array CIouRequisitionArray(CIouNumber) to CIouRequisitionLine(CIouNumber);
 
    attribute TotalSpentAmount Number {
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Total_Spent_Amount(cash_ac)";
+      fetch = "C_Iou_Requisition_API.Get_Total_Spent_Amount(c_iou_number)";
       updatable = [false];
    }
    attribute OverUtilizedAmount Number {
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(cash_ac)";
+      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number)";
       --insertable = [false];
       updatable = [false];
    }
    attribute UnderUtilizedAmount Number {
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(cash_ac)";
+      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number)";
       --insertable = [false];
       updatable = [false];
    }
-}
+   attribute Status  Enumeration(StatusListEnum);
 
+}
 @Override
 @DynamicComponentDependency MPCCOM
 entity UserDefault {
@@ -52,6 +53,11 @@ entity UserDefault {
    }
 }
 ------------------------------- ENUMERATIONS --------------------------------
+enumeration StatusListEnum {
+   value = "Requested";
+   value = "Authorized";
+   value = "Settled";
+}
 
 
 ---------------------------------- QUERIES ----------------------------------

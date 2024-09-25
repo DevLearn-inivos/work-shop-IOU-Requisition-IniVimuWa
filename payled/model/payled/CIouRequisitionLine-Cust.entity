@@ -15,7 +15,7 @@
    <LAYER>Cust</LAYER>
    <ATTRIBUTES>
       <ATTRIBUTE>
-         <NAME>CashAc</NAME>
+         <NAME>CIouNumber</NAME>
          <IS_PRIMARY_KEY>1</IS_PRIMARY_KEY>
          <IS_PARENT_KEY>1</IS_PARENT_KEY>
          <IS_PUBLIC>0</IS_PUBLIC>
@@ -34,7 +34,7 @@
          <IS_PRIMARY_KEY>1</IS_PRIMARY_KEY>
          <IS_PARENT_KEY>0</IS_PARENT_KEY>
          <IS_PUBLIC>0</IS_PUBLIC>
-         <IS_MANDATORY>1</IS_MANDATORY>
+         <IS_MANDATORY>0</IS_MANDATORY>
          <IS_SERVER_GENERATED>0</IS_SERVER_GENERATED>
          <IS_UPDATE_ALLOWED>0</IS_UPDATE_ALLOWED>
          <IS_UPDATE_ALLOWED_IF_NULL>0</IS_UPDATE_ALLOWED_IF_NULL>
@@ -159,7 +159,7 @@
          <TO_ENTITY>CIouRequisition</TO_ENTITY>
          <ATTRIBUTES>
             <ASSOCIATION_ATTRIBUTE>
-               <NAME>CashAc</NAME>
+               <NAME>CIouNumber</NAME>
             </ASSOCIATION_ATTRIBUTE>
          </ATTRIBUTES>
       </ASSOCIATION>

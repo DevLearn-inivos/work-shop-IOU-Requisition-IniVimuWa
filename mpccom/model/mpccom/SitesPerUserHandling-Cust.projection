@@ -3,12 +3,19 @@ component MPCCOM;
 layer Cust;
 
 
--------------------------------- FRAGMENTS ----------------------------------
+--------------------------------- FRAGMENTS ---------------------------------
 
 ----------------------------- MAIN ENTRY POINTS -----------------------------
 
 
-------------------------------- ENTITY DETAILS ------------------------------
+------------------------------ ENTITY DETAILS -------------------------------
+@Override
+entity UserDefault {
+   attribute BranchManager Boolean("True", "False") {
+      label = "Branch Manager";
+      default = "False";
+   }
+}
 
 
 ------------------------------- ENUMERATIONS --------------------------------

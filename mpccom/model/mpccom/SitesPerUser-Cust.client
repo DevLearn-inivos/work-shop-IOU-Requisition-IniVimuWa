@@ -19,13 +19,12 @@ layer Cust;
 ---------------------------------- GROUPS -----------------------------------
 @Override
 group UserDefaultsGroup for UserDefault {
-   label = "Branch Manager";
    field BranchManager {
-      editable = [false];
+      label = "Branch Manager";
+      editable = [true];
+      required = [true];
    }
 }
-
-
 ----------------------------------- LISTS -----------------------------------
 
 

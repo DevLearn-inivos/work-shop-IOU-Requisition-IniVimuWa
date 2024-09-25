@@ -23,22 +23,20 @@ DECLARE
    column_     Database_SYS.ColRec;
 BEGIN
    Database_SYS.Reset_Column_Table(columns_);
-   Database_SYS.Set_Table_Column(columns_, 'CASH_AC', 'VARCHAR2(100)', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'BRANCH_MANAGER', 'VARCHAR2(100)', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'REQUESTED_BY', 'VARCHAR2(100)', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'C_IOU_AMOUNT', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'VARCHAR2(100)', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'LINE_ITEM_NO', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'TRANSACTION_TYPE', 'VARCHAR2(100)', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'TRANSACTION_DATE', 'DATE', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'AMOUNT', 'NUMBER', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'GL_ACCOUNT', 'VARCHAR2(100)', 'Y');
    Database_SYS.Set_Table_Column(columns_, 'DESCRIPTION', 'VARCHAR2(1000)', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'C_IOU_DATE', 'DATE', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'NUMBER', 'Y');
-   Database_SYS.Set_Table_Column(columns_, 'STATUS', 'VARCHAR2(50)', 'Y');
-   Database_SYS.Set_Table_Column(columns_, 'SITE', 'VARCHAR2(50)', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'FLOAT_AMOUNT', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'PAYER', 'VARCHAR2(100)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'INVOICE_NO', 'NUMBER', 'Y');
    Database_SYS.Set_Table_Column(columns_, 'ROWVERSION', 'DATE', 'N');
    Database_SYS.Set_Table_Column(columns_, 'ROWKEY', 'VARCHAR2(50)', 'N', 'sys_guid()');
-   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, 'IFSAPP_DATA', NULL, TRUE);
+   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_DATA', NULL, TRUE);
 END;
 -- [END IFS COMPLETE BLOCK]
-/
 
 -- [IFS COMPLETE BLOCK DECLAREEND]
 DECLARE
@@ -46,21 +44,19 @@ DECLARE
    columns_    Database_SYS.ColumnTabType;
    column_     Database_SYS.ColRec;
 BEGIN
-   Database_SYS.Reset_Column_Table(columns_);
+   Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'NUMBER', 'N');
    Database_SYS.Set_Table_Column(columns_, 'CASH_AC', 'VARCHAR2(100)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'BRANCH_MANAGER', 'VARCHAR2(100)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'REQUESTED_BY', 'VARCHAR2(100)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'C_IOU_AMOUNT', 'NUMBER', 'N');
    Database_SYS.Set_Table_Column(columns_, 'DESCRIPTION', 'VARCHAR2(1000)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'C_IOU_DATE', 'DATE', 'N');
-   Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'NUMBER', 'Y');
-   Database_SYS.Set_Table_Column(columns_, 'STATUS', 'VARCHAR2(50)', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'STATUS', 'VARCHAR2(100)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'SITE', 'VARCHAR2(50)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'FLOAT_AMOUNT', 'NUMBER', 'Y');
    Database_SYS.Set_Table_Column(columns_, 'ROWVERSION', 'DATE', 'N');
-   --Database_SYS.Set_Table_Column(columns_, 'INSTITUTE_ID', 'VARCHAR2(50)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'ROWKEY', 'VARCHAR2(50)', 'N', 'sys_guid()');
-   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, 'IFSAPP_DATA', NULL, TRUE);
+   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_DATA', NULL, TRUE);
 END;
 -- [END IFS COMPLETE BLOCK]
 /
