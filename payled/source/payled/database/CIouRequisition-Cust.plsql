@@ -42,6 +42,11 @@ IS
    WHERE   irl.c_iou_number = c_iou_number_;
 
 BEGIN
+   IF c_iou_number_ IS NULL THEN
+    total_spent_amount_ := 0;
+    RETURN total_spent_amount_; 
+   END IF;
+   
    OPEN Get_Total_Utilized(c_iou_number_);
    FETCH Get_Total_Utilized INTO total_spent_amount_;
    CLOSE Get_Total_Utilized;
@@ -49,27 +54,33 @@ BEGIN
    RETURN total_spent_amount_;
 END Get_Total_Spent_Amount; 
    
-
-FUNCTION Get_Utilized_Amount(c_iou_number_ IN NUMBER
-                                 )RETURN NUMBER
-IS 
+FUNCTION Get_Utilized_Amount(c_iou_number_ IN NUMBER) RETURN NUMBER IS
    utilized_amount_ NUMBER;
    allocated_amount_ NUMBER;
-   
-   CURSOR  Get_Allocated_Amount(c_iou_number_ NUMBER) IS 
-   SELECT  irt.c_iou_amount allocated_amount      
-   FROM    c_iou_requisition_tab irt
-   WHERE   irt.c_iou_number = c_iou_number_; 
+
+   CURSOR Get_Allocated_Amount(c_iou_number_ NUMBER) IS 
+      SELECT irt.c_iou_amount allocated_amount      
+      FROM c_iou_requisition_tab irt
+      WHERE irt.c_iou_number = c_iou_number_; 
 
 BEGIN
+   IF c_iou_number_ IS NULL THEN
+       utilized_amount_ := 0;
+       RETURN utilized_amount_;     
+   END IF;
    OPEN Get_Allocated_Amount(c_iou_number_);
-   FETCH Get_Allocated_Amount INTO allocated_amount_ ;
+   FETCH Get_Allocated_Amount INTO allocated_amount_;
    CLOSE Get_Allocated_Amount;
-   
-   utilized_amount_ :=  allocated_amount_ - Get_Total_Spent_Amount(c_iou_number_);
-   RETURN utilized_amount_ ;
+
+   IF allocated_amount_ IS NULL THEN
+      allocated_amount_ := 0;
+   END IF;
+
+   utilized_amount_ := allocated_amount_ - Get_Total_Spent_Amount(c_iou_number_);
+
+   RETURN utilized_amount_;
 END Get_Utilized_Amount;
-  -- (+) 240918 InivimuWa (FINISH)
+-- (+) 240918 InivimuWa (FINISH)
   
   -- (+) 240923 InivimuWa (START)
 FUNCTION Get_Branch_Manager RETURN Branch_Manager_Rec_ 

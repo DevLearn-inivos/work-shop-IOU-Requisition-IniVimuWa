@@ -24,26 +24,49 @@ entity CIouRequisition {
    }
    array CIouRequisitionArray(CIouNumber) to CIouRequisitionLine(CIouNumber);
 
+//   attribute TotalSpentAmount Number {
+//      required = [false];
+//      format = ifscurrency;
+//      fetch = "nvl(C_Iou_Requisition_API.Get_Total_Spent_Amount(c_iou_number),0)";
+//      updatable = [false];
+//   }
+//   attribute OverUtilizedAmount Number {
+//      required = [false];
+//      format = ifscurrency;
+//      fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
+//      updatable = [false];
+//   }
+//   attribute UnderUtilizedAmount Number {
+//      required = [false];
+//      format = ifscurrency;
+//      fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
+//      updatable = [false];
+//   }
+  // attribute Status  Enumeration(StatusListEnum);
+}
+
+@Override
+entity CIouRequisitionLine {
    attribute TotalSpentAmount Number {
+      required = [false];
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Total_Spent_Amount(c_iou_number)";
+      fetch = "nvl(C_Iou_Requisition_API.Get_Total_Spent_Amount(c_iou_number),0)";
       updatable = [false];
    }
    attribute OverUtilizedAmount Number {
+      required = [false];
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number)";
-      --insertable = [false];
+      fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
    attribute UnderUtilizedAmount Number {
+      required = [false];
       format = ifscurrency;
-      fetch = "C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number)";
-      --insertable = [false];
+      fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
-   attribute Status  Enumeration(StatusListEnum);
-
 }
+
 @Override
 @DynamicComponentDependency MPCCOM
 entity UserDefault {
@@ -53,11 +76,11 @@ entity UserDefault {
    }
 }
 ------------------------------- ENUMERATIONS --------------------------------
-enumeration StatusListEnum {
-   value = "Requested";
-   value = "Authorized";
-   value = "Settled";
-}
+//enumeration StatusListEnum {
+//   value = "Requested";
+//   value = "Authorized";
+//   value = "Settled";
+//}
 
 
 ---------------------------------- QUERIES ----------------------------------

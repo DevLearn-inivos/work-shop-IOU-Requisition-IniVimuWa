@@ -17,7 +17,7 @@
       <ATTRIBUTE>
          <NAME>CIouNumber</NAME>
          <IS_PRIMARY_KEY>1</IS_PRIMARY_KEY>
-         <IS_PARENT_KEY>1</IS_PARENT_KEY>
+         <IS_PARENT_KEY>0</IS_PARENT_KEY>
          <IS_PUBLIC>0</IS_PUBLIC>
          <IS_MANDATORY>1</IS_MANDATORY>
          <IS_SERVER_GENERATED>0</IS_SERVER_GENERATED>
@@ -153,7 +153,7 @@
    </ATTRIBUTES>
    <ASSOCIATIONS>
       <ASSOCIATION>
-         <NAME>RequisitionLines</NAME>
+         <NAME>CIouRequisitionLines</NAME>
          <IS_PARENT>1</IS_PARENT>
          <IS_VIEW_REFERENCE>0</IS_VIEW_REFERENCE>
          <TO_ENTITY>CIouRequisition</TO_ENTITY>

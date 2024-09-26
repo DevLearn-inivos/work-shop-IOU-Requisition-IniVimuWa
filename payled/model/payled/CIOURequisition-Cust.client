@@ -79,7 +79,7 @@ group CIOURequisitionGroup for CIouRequisition {
    field Site;
    field FloatAmount;
 }
-group TotalmountsGroup for CIouRequisition {
+group TotalmountsGroup for CIouRequisitionLine {
 
    label = "Total Amounts ";
    field TotalSpentAmount {
