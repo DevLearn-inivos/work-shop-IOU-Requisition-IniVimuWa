@@ -21,22 +21,22 @@ page IouRequisitionPage using IOURequisitionSet {
    group CIOURequisitionGroup bind CIOURequisitionSelector;
    group TotalmountsGroup;
   -- group TotalmountsGroup;
-   list IouRequisitionLineList(CIouRequisitionArray)bind CIOURequisitionSelector;
+   list IouRequisitionLineList(CIouRequisitionArray)bind CIOURequisitionLineSelector;
    //list CashAccountsList;
-
    //bind CIOURequisitionSelector;
 }
-
 
 page IouRequisitionLinePage using IOURequisitionLineSet {
 
    list IouRequisitionLineList;
 }
-
 --------------------------------- COMMANDS ----------------------------------
 
 
 --------------------------------- SELECTORS ---------------------------------
+selector CIOURequisitionLineSelector for CIouRequisitionLine {
+   label = "test";
+}
 selector CIOURequisitionSelector for CIouRequisition {
 
    label = "Cash A/C - ${CashAc}";
@@ -44,8 +44,6 @@ selector CIOURequisitionSelector for CIouRequisition {
    field BranchManager;
    field CIouAmount;
 }
-//selector CashAccountSelector for CashAccount {
-//}
 selector CashAccSelector for CashAccount {
    static InstituteId;
    static Description;
@@ -56,7 +54,10 @@ selector RequestedBySelector for CompanyPerson {
    static Lname;
 }
 
-
+@DynamicComponentDependency MPCCOM
+selector CBranchManagerselector for BranchmanagersLov {
+   static Userid;
+}
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
 
@@ -64,19 +65,20 @@ group CIOURequisitionGroup for CIouRequisition {
    lov CashAccountRef with CashAccSelector {
       size = Medium;
    }
-   field BranchManager;
-
+   @DynamicComponentDependency MPCCOM
+   lov CBranchManagerRef with CBranchManagerselector {
+      size = Medium;
+   }
    @DynamicComponentDependency PERSON
    lov RequestedByRef with RequestedBySelector {
       size = Medium;
-
    }
    field CIouAmount;
    field Description;
    field CIouDate;
    field CIouNumber;
    field Status;
-   field Site;
+   field SiteRef;
    field FloatAmount;
 }
 group TotalmountsGroup for CIouRequisitionLine {
@@ -94,8 +96,6 @@ group TotalmountsGroup for CIouRequisitionLine {
       editable = [false];
    }
 }
-
-
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
