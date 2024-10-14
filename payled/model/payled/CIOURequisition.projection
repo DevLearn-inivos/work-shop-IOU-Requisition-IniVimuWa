@@ -10,7 +10,6 @@ category Users;
 entityset IOURequisitionSet for CIouRequisition;
 entityset IOURequisitionLineSet for CIouRequisitionLine;
 
-
 ------------------------------ ENTITY DETAILS -------------------------------
 @Override
 entity CIouRequisition {
@@ -27,7 +26,7 @@ entity CIouRequisition {
       label = "Branch Manager";
    }
    @DynamicComponentDependency MPCCOM
-   reference SiteRef(BranchManager, Site) to SiteLov(CBranchManager, Contract);
+   reference SiteRef(Site) to SiteLov(Contract);
 }
 @Override
 entity CIouRequisitionLine {
@@ -61,15 +60,9 @@ query BranchmanagersLov {
 
    attribute Userid Text;
 }
-@DynamicComponentDependency MPCCOM
 query SiteLov {
-   from = "user_default a, user_allowed_site b";
-   where = "a.userid =  b.userid";
-   keys = BranchManager, Contract;
-   attribute BranchManager Text;
-   attribute Contract Text {
-      fetch = "b.contract";
-   }
+   from = "Sites_View_Public";
+   attribute Contract Text;
 }
 
 ---------------------------------- ACTIONS ----------------------------------

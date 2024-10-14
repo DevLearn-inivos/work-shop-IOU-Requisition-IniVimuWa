@@ -1,0 +1,28 @@
+-----------------------------------------------------------------------------
+--
+--  Logical unit: CIouRequisition
+--  Component:    PAYLED
+--
+--  IFS Developer Studio Template Version 3.0
+--
+--  Date    Sign    History
+--  ------  ------  ---------------------------------------------------------
+-----------------------------------------------------------------------------
+
+layer Cust;
+
+-------------------- COMMON COLUMN DEFINITIONS ------------------------------
+
+
+-------------------- PUBLIC VIEW DEFINITIONS --------------------------------
+VIEW Sites_View_Public IS 
+SELECT t.contract   contract
+FROM user_allowed_site t
+WHERE t.userid IN (SELECT t.userid 
+                  FROM user_default v 
+                  WHERE v.c_branch_manager='True');
+
+
+
+-------------------- PRIVATE VIEW DEFINITIONS -------------------------------
+

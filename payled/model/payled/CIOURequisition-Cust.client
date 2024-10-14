@@ -58,6 +58,11 @@ selector RequestedBySelector for CompanyPerson {
 selector CBranchManagerselector for BranchmanagersLov {
    static Userid;
 }
+
+selector CSiteSelector for SiteLov {
+   static Contract;
+}
+
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
 
@@ -78,7 +83,9 @@ group CIOURequisitionGroup for CIouRequisition {
    field CIouDate;
    field CIouNumber;
    field Status;
-   field SiteRef;
+   lov SiteRef with CSiteSelector {
+      size = Medium;
+   }
    field FloatAmount;
 }
 group TotalmountsGroup for CIouRequisitionLine {

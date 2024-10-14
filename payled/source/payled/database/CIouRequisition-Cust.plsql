@@ -25,6 +25,17 @@ TYPE C_Status_Rec_ IS RECORD (
    status2  VARCHAR2(100),
    status3  VARCHAR2(100) 
 );
+
+-- (+) 241014 InivimuWa (START)
+TYPE C_Site_Rec_ IS RECORD (
+   site VARCHAR2(100)
+);
+
+TYPE C_User_Id_Rec_ IS RECORD (
+   user_id VARCHAR2(100)
+); 
+-- (+) 241014 InivimuWa (FINISH)
+
   -- (+) 240925 InivimuWa (FINISH)
 -------------------- PRIVATE DECLARATIONS -----------------------------------
 
@@ -83,24 +94,63 @@ END Get_Utilized_Amount;
 -- (+) 240918 InivimuWa (FINISH)
   
   -- (+) 240923 InivimuWa (START)
-FUNCTION Get_Branch_Manager RETURN Branch_Manager_Rec_ 
-IS
-   branch_manager_id_ Branch_Manager_Rec_;
+--FUNCTION Get_Branch_Manager RETURN Branch_Manager_Rec_ 
+--IS
+--   branch_manager_id_ Branch_Manager_Rec_;
+--   
+--   CURSOR Get_Branch_Managers IS
+--      SELECT t.userid 
+--      FROM user_default t 
+--      WHERE t.objkey = (SELECT ud.rowkey FROM user_default_cft ud WHERE ud.cf$_c_branch_manager = 'TRUE')--;
+--   
+--BEGIN
+--   OPEN Get_Branch_Managers;
+--   FETCH Get_Branch_Managers INTO branch_manager_id_;
+--   CLOSE Get_Branch_Managers;
+--   
+--   RETURN branch_manager_id_;
+-- 
+--END Get_Branch_Manager;
+  -- (+) 240923 InivimuWa (FINISH) 
+  
+  -- (+) 241014 InivimuWa (START)
+FUNCTION Get_Site RETURN C_Site_Rec_ 
+IS 
+   site_ C_Site_Rec_ ;
+   user_id_ VARCHAR2(100);
    
-   CURSOR Get_Branch_Managers IS
-      SELECT t.userid 
-      FROM user_default t 
-      WHERE t.objkey = (SELECT ud.rowkey FROM user_default_cft ud WHERE ud.cf$_c_branch_manager = 'TRUE');
+   CURSOR Get_Sites(user_id_ VARCHAR2) IS
+   SELECT t.contract 
+   FROM user_allowed_site t
+   WHERE t.userid= user_id_;
+   
+   CURSOR Get_User_Id IS
+   SELECT v.userid 
+   FROM user_default v 
+   WHERE v.c_branch_manager='True';
    
 BEGIN
-   OPEN Get_Branch_Managers;
-   FETCH Get_Branch_Managers INTO branch_manager_id_;
-   CLOSE Get_Branch_Managers;
+   OPEN Get_User_Id ;
+      LOOP 
+         FETCH Get_User_Id INTO user_id_;
+         EXIT WHEN Get_User_Id%NOTFOUND;
+            OPEN Get_Sites(user_id_);
+            LOOP 
+            FETCH Get_Sites INTO site_;
+            EXIT WHEN Get_Sites%NOTFOUND;
+            CLOSE Get_Sites;
+         CLOSE Get_User_Id;
+          END LOOP;
+      CLOSE Get_Sites; 
+   END LOOP;
+   CLOSE Get_User_Id; 
+   RETURN site_; 
+END Get_Site;
+
+         
    
-   RETURN branch_manager_id_;
- 
-END Get_Branch_Manager;
-  -- (+) 240923 InivimuWa (FINISH) 
+   
+  -- (+) 241014 InivimuWa (FINISH)
    -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
    
    
