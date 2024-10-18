@@ -13,7 +13,6 @@ layer Cust;
 entity UserDefault {
    attribute CBranchManager Boolean("TRUE", "FALSE") {
       label = "Branch Manager";
-      //default = "False";
    }
 }
 
