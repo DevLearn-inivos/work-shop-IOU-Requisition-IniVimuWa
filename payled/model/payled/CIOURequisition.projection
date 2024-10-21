@@ -18,6 +18,7 @@ entity CIouRequisition {
       label = "IOU Number";
    }
 
+   attribute CBranchManager Boolean("TRUE", "FALSE");
    /*reference IouNuberRef(CIouNumber) to IouAmount(NextVal) {
       label = "IOU Number";
    }*/

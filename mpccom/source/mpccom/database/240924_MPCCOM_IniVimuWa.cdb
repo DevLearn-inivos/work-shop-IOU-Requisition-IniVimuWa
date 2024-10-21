@@ -27,5 +27,21 @@ BEGIN
 END;
 -- [END IFS COMPLETE BLOCK]
 /
+DECLARE
+   table_name_ VARCHAR2(30) := 'USER_ALLOWED_SITE_TAB';
+   columns_    Database_SYS.ColumnTabType;
+   column_     Database_SYS.ColRec;
+BEGIN
+   Database_SYS.Reset_Column_Table(columns_);
+   Database_SYS.Set_Table_Column(columns_, 'USERID', 'VARCHAR2(30)', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'CONTRACT', 'VARCHAR2(5)', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'USER_SITE_TYPE', 'VARCHAR2(40)', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'C_BRANCH_MANAGER', 'VARCHAR2(20)', 'N', '''FALSE''');
+   Database_SYS.Set_Table_Column(columns_, 'ROWVERSION', 'DATE', 'N');
+   Database_SYS.Set_Table_Column(columns_, 'ROWKEY', 'VARCHAR2(50)', 'N', 'sys_guid()');
+   Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_DATA', NULL, TRUE);
+END;
+-- [END IFS COMPLETE BLOCK]
+/
 
 SET SERVEROUTPUT OFF

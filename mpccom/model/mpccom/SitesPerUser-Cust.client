@@ -18,10 +18,11 @@ layer Cust;
 
 ---------------------------------- GROUPS -----------------------------------
 @Override
-group UserDefaultsGroup for UserDefault {
+list SiteList for UserAllowedSite {
+   //editmode = SingleCellEdit;
    field CBranchManager {
       label = "Branch Manager";
-      //editable = [true];
+      editable = [true];
       //required = [true];
    }
 }

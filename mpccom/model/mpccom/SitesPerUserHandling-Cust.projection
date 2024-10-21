@@ -9,9 +9,18 @@ layer Cust;
 
 
 ------------------------------ ENTITY DETAILS -------------------------------
+//@Override
+//entity UserDefault {
+//   attribute CBranchManager Boolean("TRUE", "FALSE") {
+//      label = "Branch Manager";
+//   }
+//}
+
 @Override
-entity UserDefault {
+entity UserAllowedSite {
    attribute CBranchManager Boolean("TRUE", "FALSE") {
+      editable = [true];
+
       label = "Branch Manager";
    }
 }

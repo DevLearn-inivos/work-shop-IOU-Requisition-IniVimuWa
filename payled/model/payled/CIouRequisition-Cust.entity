@@ -12,7 +12,7 @@
    </DIAGRAMS>
    <COMMENTS>
       <COMMENT>
-         <POSITION>15</POSITION>
+         <POSITION>16</POSITION>
          <COMMENT_TEXT>//private      InstituteId   TEXT(50)             AMI-L;
 </COMMENT_TEXT>
          <SECTION>attributes</SECTION>
@@ -145,6 +145,11 @@
          <DATATYPE>DATE</DATATYPE>
       </ATTRIBUTE>
       <ATTRIBUTE>
+         <CODE_GENERATION_PROPERTIES>
+            <CODE_GENERATION_PROPERTIES>
+               <DB_TABLE_COLUMN_DEFAULT_VALUE>&apos;Requested&apos;</DB_TABLE_COLUMN_DEFAULT_VALUE>
+            </CODE_GENERATION_PROPERTIES>
+         </CODE_GENERATION_PROPERTIES>
          <NAME>Status</NAME>
          <IS_PRIMARY_KEY>0</IS_PRIMARY_KEY>
          <IS_PARENT_KEY>0</IS_PARENT_KEY>
