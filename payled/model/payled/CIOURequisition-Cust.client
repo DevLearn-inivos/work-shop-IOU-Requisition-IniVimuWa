@@ -26,10 +26,10 @@ page IouRequisitionPage using IOURequisitionSet {
    //bind CIOURequisitionSelector;
 }
 
-page IouRequisitionLinePage using IOURequisitionLineSet {
-
-   list IouRequisitionLineList;
-}
+//page IouRequisitionLinePage using IOURequisitionLineSet {
+//
+//   list IouRequisitionLineList;
+//}
 --------------------------------- COMMANDS ----------------------------------
 
 
@@ -48,6 +48,9 @@ selector CashAccSelector for CashAccount {
    static InstituteId;
    static Description;
 }
+//selector IouNumberSelector for CIouRequisition {
+//}
+
 @DynamicComponentDependency PERSON
 selector RequestedBySelector for CompanyPerson {
    static Fname;
@@ -62,11 +65,16 @@ selector CBranchManagerselector for BranchmanagersLov {
 selector CSiteSelector for SiteLov {
    static Contract;
 }
+//selector IouNoSelector for IouAmount {
+//   static NextVal;
+//}
 
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
 
    label = "Main Info";
+   field CIouNumber;
+
    lov CashAccountRef with CashAccSelector {
       size = Medium;
    }
@@ -81,7 +89,6 @@ group CIOURequisitionGroup for CIouRequisition {
    field CIouAmount;
    field Description;
    field CIouDate;
-   field CIouNumber;
    field Status;
    lov SiteRef with CSiteSelector {
       size = Medium;

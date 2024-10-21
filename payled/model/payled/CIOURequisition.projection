@@ -14,6 +14,13 @@ entityset IOURequisitionLineSet for CIouRequisitionLine;
 @Override
 entity CIouRequisition {
 
+   attribute CIouNumber Number {
+      label = "IOU Number";
+   }
+
+   /*reference IouNuberRef(CIouNumber) to IouAmount(NextVal) {
+      label = "IOU Number";
+   }*/
    reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
       label = "Cash Accounts";
    }
@@ -64,6 +71,11 @@ query SiteLov {
    from = "Sites_View_Public";
    attribute Contract Text;
 }
+//query IouAmount {
+//   attribute NextVal Number {
+//      fetch = "nvl(C_Iou_Requisition_API.Get_Iou_Number,0)";
+//   }
+//}
 
 ---------------------------------- ACTIONS ----------------------------------
 

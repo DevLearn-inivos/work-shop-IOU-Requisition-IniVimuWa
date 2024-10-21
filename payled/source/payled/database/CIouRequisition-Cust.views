@@ -22,6 +22,9 @@ WHERE t.userid in (SELECT v.userid
                   FROM user_default v 
                   WHERE v.c_branch_manager='True');
 
+VIEW Get_Iou_Amount IS 
+ SELECT MAX(t.c_iou_number)+1 next_iou 
+   FROM c_iou_requisition_tab t;
 
 
 -------------------- PRIVATE VIEW DEFINITIONS -------------------------------

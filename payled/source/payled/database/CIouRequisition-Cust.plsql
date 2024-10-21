@@ -147,9 +147,26 @@ BEGIN
    RETURN site_; 
 END Get_Site;
 
-         
+  -- (+) 241021 InivimuWa (START)
+FUNCTION Get_Iou_Number RETURN NUMBER 
+IS 
+   current_iou_ NUMBER;
+   next_val_ NUMBER;
    
+   CURSOR Get_Max_Iou_Number IS 
+   SELECT NVL(MAX(t.c_iou_number),0) 
+   FROM c_iou_requisition_tab t;
+BEGIN
+   OPEN Get_Max_Iou_Number ;
+   FETCH Get_Max_Iou_Number INTO current_iou_ ;
+
+   next_val_ := current_iou_ + 1;
+   CLOSE Get_Max_Iou_Number;
+   RETURN next_val_;
+END Get_Iou_Number;
    
+  -- (+) 241021 InivimuWa (FINISH)
+  
   -- (+) 241014 InivimuWa (FINISH)
    -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
    
@@ -158,7 +175,40 @@ END Get_Site;
    
    
    -------------------- LU SPECIFIC PUBLIC METHODS -----------------------------
+@Override
+PROCEDURE Prepare_Insert___ (
+   attr_ IN OUT VARCHAR2 )
+IS
+   CURSOR Get_Max_Iou_Number IS 
+   SELECT NVL(MAX(t.c_iou_number),0) 
+   FROM c_iou_requisition_tab t;
    
+   line_no_ NUMBER;
+   
+BEGIN
+   --Add pre-processing code here
+   super(attr_);
+   
+   OPEN Get_Max_Iou_Number;
+   FETCH Get_Max_Iou_Number INTO line_no_;
+   CLOSE Get_Max_Iou_Number;
+   
+   IF line_no_ IS NULL THEN
+      line_no_ := 0;
+   END IF;  
+   line_no_ := line_no_ + 1;
+   Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
+   --Add post-processing code here
+END Prepare_Insert___;
+
+
+
+
+
+
+
+
+
    
    -------------------- LU CUST NEW METHODS -------------------------------------
    
