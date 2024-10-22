@@ -18,7 +18,7 @@ entity CIouRequisition {
       label = "IOU Number";
    }
 
-   attribute CBranchManager Boolean("TRUE", "FALSE");
+   //attribute CBranchManager Boolean("TRUE", "FALSE");
    /*reference IouNuberRef(CIouNumber) to IouAmount(NextVal) {
       label = "IOU Number";
    }*/
@@ -63,7 +63,7 @@ entity CIouRequisitionLine {
 ---------------------------------- QUERIES ----------------------------------
 @DynamicComponentDependency MPCCOM
 query BranchmanagersLov {
-   from = "USER_DEFAULT";
+   from = "user_allowed_site";
    where = "c_branch_manager in ('True')";
 
    attribute Userid Text;
