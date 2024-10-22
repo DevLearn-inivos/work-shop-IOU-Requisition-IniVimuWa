@@ -21,10 +21,12 @@ page IouRequisitionPage using IOURequisitionSet {
    group CIOURequisitionGroup bind CIOURequisitionSelector;
    group TotalmountsGroup;
   -- group TotalmountsGroup;
-   list IouRequisitionLineList(CIouRequisitionArray)bind CIOURequisitionLineSelector;
+   list IouRequisitionLineList using IOURequisitionLineSet;
+   --(CIouRequisitionArray)bind CIOURequisitionLineSelector;
    //list CashAccountsList;
    //bind CIOURequisitionSelector;
 }
+
 
 //page IouRequisitionLinePage using IOURequisitionLineSet {
 //
@@ -34,9 +36,9 @@ page IouRequisitionPage using IOURequisitionSet {
 
 
 --------------------------------- SELECTORS ---------------------------------
-selector CIOURequisitionLineSelector for CIouRequisitionLine {
-   label = "test";
-}
+//selector CIOURequisitionLineSelector for CIouRequisitionLine {
+//   label = "test";
+//}
 selector CIOURequisitionSelector for CIouRequisition {
 
    label = "Cash A/C - ${CashAc}";

@@ -163,6 +163,8 @@ IS
    SELECT NVL(MAX(t.c_iou_number),0) 
    FROM c_iou_requisition_tab t;
    
+   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
+   SELECT 
    line_no_ NUMBER;
    
 BEGIN
@@ -178,6 +180,8 @@ BEGIN
    END IF;  
    line_no_ := line_no_ + 1;
    Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
+   
+   
    --Add post-processing code here
 END Prepare_Insert___;
 

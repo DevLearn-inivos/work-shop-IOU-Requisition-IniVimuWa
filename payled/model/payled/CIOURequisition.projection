@@ -56,7 +56,7 @@ entity CIouRequisitionLine {
       fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
-   array CIouRequisitionArray(CIouNumber) to CIouRequisitionLine(CIouNumber);
+   --array CIouRequisitionArray(CIouNumber) to CIouRequisitionLine(CIouNumber);
 }
 ------------------------------- ENUMERATIONS --------------------------------
 
