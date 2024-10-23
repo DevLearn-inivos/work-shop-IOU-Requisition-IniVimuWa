@@ -22,10 +22,30 @@ page IouRequisitionPage using IOURequisitionSet {
    group TotalmountsGroup;
    list IouRequisitionLineList using IOURequisitionLineSet;
 }
+
+-------------------------------- ASSISTANTS ---------------------------------
+
+assistant InvoiceNumAssistant using IOURequisitionLineSet {
+   label = "Payer - Invoice Number";
+   input(Payer);
+   singlestep {
+      list IouRequisitionLineList;
+   }
+   command Cancel {
+      label = "Close";
+   }
+}
+
 --------------------------------- COMMANDS ----------------------------------
+command Cancel for CIouRequisitionLine {
+   execute {
+      exit CANCEL;
+   }
+}
 
 
 --------------------------------- SELECTORS ---------------------------------
+
 selector CIOURequisitionSelector for CIouRequisition {
 
    label = "Cash A/C - ${CashAc}";
@@ -112,16 +132,27 @@ list IouRequisitionLineList for CIouRequisitionLine {
       size = Medium;
       editable = [TransactionType = "Cash"];
    }
-   lov PayerRef with CPayerSelector {
+   field PayerRef {
       size = Medium;
       editable = [TransactionType = "Supplier"];
+      validate command {
+         execute {
+            assistant InvoiceNumAssistant(Payer) {
+               when CANCEL {
+                  exit CANCEL;
+               }
+            }
+
+         }
+
+      }
    }
    //field Description;
    field InvoiceNo {
       editable = [TransactionType = "Supplier"];
    }
-
 }
+
 ---------------------------------- DIALOGS ----------------------------------
 
 
