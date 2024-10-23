@@ -163,9 +163,9 @@ IS
    SELECT NVL(MAX(t.c_iou_number),0) 
    FROM c_iou_requisition_tab t;
    
-   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
-   SELECT 
-   line_no_ NUMBER;
+--   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
+--   SELECT 
+   --line_no_ NUMBER--;
    
 BEGIN
    --Add pre-processing code here

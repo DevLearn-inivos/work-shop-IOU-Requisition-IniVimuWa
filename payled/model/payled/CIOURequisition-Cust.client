@@ -20,25 +20,12 @@ page IouRequisitionPage using IOURequisitionSet {
    selector CIOURequisitionSelector;
    group CIOURequisitionGroup bind CIOURequisitionSelector;
    group TotalmountsGroup;
-  -- group TotalmountsGroup;
    list IouRequisitionLineList using IOURequisitionLineSet;
-   --(CIouRequisitionArray)bind CIOURequisitionLineSelector;
-   //list CashAccountsList;
-   //bind CIOURequisitionSelector;
 }
-
-
-//page IouRequisitionLinePage using IOURequisitionLineSet {
-//
-//   list IouRequisitionLineList;
-//}
 --------------------------------- COMMANDS ----------------------------------
 
 
 --------------------------------- SELECTORS ---------------------------------
-//selector CIOURequisitionLineSelector for CIouRequisitionLine {
-//   label = "test";
-//}
 selector CIOURequisitionSelector for CIouRequisition {
 
    label = "Cash A/C - ${CashAc}";
@@ -50,9 +37,6 @@ selector CashAccSelector for CashAccount {
    static InstituteId;
    static Description;
 }
-//selector IouNumberSelector for CIouRequisition {
-//}
-
 @DynamicComponentDependency PERSON
 selector RequestedBySelector for CompanyPerson {
    static Fname;
@@ -63,13 +47,18 @@ selector RequestedBySelector for CompanyPerson {
 selector CBranchManagerselector for BranchmanagersLov {
    static Userid;
 }
-
 selector CSiteSelector for SiteLov {
    static Contract;
 }
-//selector IouNoSelector for IouAmount {
-//   static NextVal;
-//}
+@DynamicComponentDependency ACCRUL
+selector CGLAccountSelector for Account {
+   static Account;
+}
+@DynamicComponentDependency ENTERP
+selector CPayerSelector for SupplierInfoGeneral {
+   static Name;
+}
+
 
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
@@ -115,13 +104,23 @@ group TotalmountsGroup for CIouRequisitionLine {
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
+   field LineItemNo;
    field TransactionType;
    field TransactionDate;
-   field GlAccount;
-   field Payer;
-   field Description;
-   field InvoiceNo;
    field Amount;
+   lov GLAccountRef with CGLAccountSelector {
+      size = Medium;
+      editable = [TransactionType = "Cash"];
+   }
+   lov PayerRef with CPayerSelector {
+      size = Medium;
+      editable = [TransactionType = "Supplier"];
+   }
+   //field Description;
+   field InvoiceNo {
+      editable = [TransactionType = "Supplier"];
+   }
+
 }
 ---------------------------------- DIALOGS ----------------------------------
 

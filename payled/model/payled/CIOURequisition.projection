@@ -17,11 +17,6 @@ entity CIouRequisition {
    attribute CIouNumber Number {
       label = "IOU Number";
    }
-
-   //attribute CBranchManager Boolean("TRUE", "FALSE");
-   /*reference IouNuberRef(CIouNumber) to IouAmount(NextVal) {
-      label = "IOU Number";
-   }*/
    reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
       label = "Cash Accounts";
    }
@@ -56,7 +51,18 @@ entity CIouRequisitionLine {
       fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
-   --array CIouRequisitionArray(CIouNumber) to CIouRequisitionLine(CIouNumber);
+   attribute TransactionType Enumeration(TransactionTypeEnum) {
+      default = "'Cash'";
+      fetch = "''";
+   }
+   attribute LineItemNo Number {
+      label = "Line Item No";
+   }
+   @DynamicComponentDependency ACCRUL
+   reference GLAccountRef(GlAccount) to Account(Account);
+
+   @DynamicComponentDependency ENTERP
+   reference PayerRef(Payer) to SupplierInfoGeneral(SupplierId);
 }
 ------------------------------- ENUMERATIONS --------------------------------
 
@@ -65,18 +71,12 @@ entity CIouRequisitionLine {
 query BranchmanagersLov {
    from = "user_allowed_site";
    where = "c_branch_manager in ('True')";
-
    attribute Userid Text;
 }
 query SiteLov {
    from = "Sites_View_Public";
    attribute Contract Text;
 }
-//query IouAmount {
-//   attribute NextVal Number {
-//      fetch = "nvl(C_Iou_Requisition_API.Get_Iou_Number,0)";
-//   }
-//}
 
 ---------------------------------- ACTIONS ----------------------------------
 

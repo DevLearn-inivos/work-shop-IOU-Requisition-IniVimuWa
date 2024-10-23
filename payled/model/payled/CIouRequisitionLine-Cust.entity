@@ -56,7 +56,7 @@
          <IS_QUERYABLE>1</IS_QUERYABLE>
          <IS_DERIVED>0</IS_DERIVED>
          <DATATYPE>TEXT</DATATYPE>
-         <LENGTH>100</LENGTH>
+         <LENGTH>20</LENGTH>
       </ATTRIBUTE>
       <ATTRIBUTE>
          <NAME>TransactionDate</NAME>
