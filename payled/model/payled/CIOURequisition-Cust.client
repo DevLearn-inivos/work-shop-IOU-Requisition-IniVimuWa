@@ -29,7 +29,7 @@ assistant InvoiceNumAssistant using IOURequisitionLineSet {
    label = "Payer - Invoice Number";
    input(Payer);
    singlestep {
-      list IouRequisitionLineList;
+      list AssistantGroup;
    }
    command Cancel {
       label = "Close";
@@ -42,7 +42,6 @@ command Cancel for CIouRequisitionLine {
       exit CANCEL;
    }
 }
-
 
 --------------------------------- SELECTORS ---------------------------------
 
@@ -121,6 +120,12 @@ group TotalmountsGroup for CIouRequisitionLine {
       editable = [false];
    }
 }
+list AssistantGroup for CIouRequisitionLine {
+   field Payer;
+   field InvoiceRef {
+      size = Medium;
+   }
+}
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
@@ -142,12 +147,9 @@ list IouRequisitionLineList for CIouRequisitionLine {
                   exit CANCEL;
                }
             }
-
          }
-
       }
    }
-   //field Description;
    field InvoiceNo {
       editable = [TransactionType = "Supplier"];
    }

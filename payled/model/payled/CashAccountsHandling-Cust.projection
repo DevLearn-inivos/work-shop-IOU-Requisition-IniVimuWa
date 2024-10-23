@@ -14,17 +14,12 @@ entity CashAccount {
    attribute CAllocatedIouAmount Number;
    attribute CSite Text;
 
-
 }
 
 ------------------------------- ENUMERATIONS --------------------------------
 
 
 ---------------------------------- QUERIES ----------------------------------
-//query SiteLov {
-//
-//}
-
 
 ---------------------------------- ACTIONS ----------------------------------
 

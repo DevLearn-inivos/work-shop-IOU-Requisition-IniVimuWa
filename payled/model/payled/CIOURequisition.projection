@@ -30,6 +30,8 @@ entity CIouRequisition {
    }
    @DynamicComponentDependency MPCCOM
    reference SiteRef(Site) to SiteLov(Contract);
+
+   reference InvoiceRef(InvoiceNo) to InvoiceLov(InvoiceNo);
 }
 @Override
 entity CIouRequisitionLine {
@@ -76,6 +78,11 @@ query BranchmanagersLov {
 query SiteLov {
    from = "Sites_View_Public";
    attribute Contract Text;
+}
+query InvoiceLov {
+   from = "Incoming_Invoice2";
+   where = "name = Payer";
+   attribute InvoiceNo Text;
 }
 
 ---------------------------------- ACTIONS ----------------------------------
