@@ -25,16 +25,36 @@ page IouRequisitionPage using IOURequisitionSet {
 
 -------------------------------- ASSISTANTS ---------------------------------
 
-assistant InvoiceNumAssistant using IOURequisitionLineSet {
+//assistant InvoiceNumAssistant using VirtInvoiceNumSet {
+//   label = "Payer - Invoice Number";
+////   input(Payer);
+////   output(InvoiceRef);
+//
+//   singlestep {
+//      list AssistantList;
+//   }
+//   command Cancel {
+//      label = "Close";
+//   }
+//}
+assistant InvoiceNumAssistant using VirtInvoiceNumSet {
+
    label = "Payer - Invoice Number";
-   input(Payer);
+
+
    singlestep {
-      list AssistantGroup;
+
+      //group CustomerInfo;
+      list AssistantList;
+
    }
-   command Cancel {
-      label = "Close";
-   }
+
+
+   //command Ok;
+   command Cancel;
+
 }
+
 
 --------------------------------- COMMANDS ----------------------------------
 command Cancel for CIouRequisitionLine {
@@ -77,7 +97,10 @@ selector CGLAccountSelector for Account {
 selector CPayerSelector for SupplierInfoGeneral {
    static Name;
 }
-
+@DynamicComponentDependency INVOIC
+selector CInvoiceNumSelecor for InvoiceLov {
+   static InvoiceNo;
+}
 
 ---------------------------------- GROUPS -----------------------------------
 group CIOURequisitionGroup for CIouRequisition {
@@ -120,12 +143,7 @@ group TotalmountsGroup for CIouRequisitionLine {
       editable = [false];
    }
 }
-list AssistantGroup for CIouRequisitionLine {
-   field Payer;
-   field InvoiceRef {
-      size = Medium;
-   }
-}
+
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
@@ -138,6 +156,7 @@ list IouRequisitionLineList for CIouRequisitionLine {
       editable = [TransactionType = "Cash"];
    }
    field PayerRef {
+      label = "Payer";
       size = Medium;
       editable = [TransactionType = "Supplier"];
       validate command {
@@ -155,6 +174,14 @@ list IouRequisitionLineList for CIouRequisitionLine {
    }
 }
 
+list AssistantList for VirtInvoiceNum {
+   //   field Payer;
+   @DynamicComponentDependency INVOIC
+   lov InvoiceRef with CInvoiceNumSelecor {
+      label = "Invoice Numbers";
+      size = Medium;
+   }
+}
 ---------------------------------- DIALOGS ----------------------------------
 
 

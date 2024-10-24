@@ -9,6 +9,8 @@ category Users;
 ----------------------------- MAIN ENTRY POINTS -----------------------------
 entityset IOURequisitionSet for CIouRequisition;
 entityset IOURequisitionLineSet for CIouRequisitionLine;
+entityset VirtInvoiceNumSet for VirtInvoiceNum;
+
 
 ------------------------------ ENTITY DETAILS -------------------------------
 @Override
@@ -32,7 +34,7 @@ entity CIouRequisition {
    @DynamicComponentDependency MPCCOM
    reference SiteRef(Site) to SiteLov(Contract);
 
-   reference InvoiceRef(InvoiceNo) to InvoiceLov(InvoiceNo);
+
 }
 @Override
 entity CIouRequisitionLine {
@@ -67,6 +69,9 @@ entity CIouRequisitionLine {
 
    @DynamicComponentDependency ENTERP
    reference PayerRef(Payer) to SupplierInfoGeneral(SupplierId);
+
+//   @DynamicComponentDependency INVOIC
+//   reference InvoiceRef(Payer, InvoiceNo) to InvoiceLov(Name, InvoiceNo);
 }
 ------------------------------- ENUMERATIONS --------------------------------
 
@@ -81,13 +86,13 @@ query SiteLov {
    from = "Sites_View_Public";
    attribute Contract Text;
 }
+@DynamicComponentDependency INVOIC
 query InvoiceLov {
    from = "Incoming_Invoice2";
-   where = "name = Payer";
+   keys = InvoiceNo, Name;
    attribute InvoiceNo Text;
-   //jihadsfihafsh
-   //test
-   //test
+   attribute Name Text;
+
 }
 
 ---------------------------------- ACTIONS ----------------------------------
@@ -99,6 +104,12 @@ query InvoiceLov {
 
 
 --------------------------------- VIRTUALS ----------------------------------
+virtual VirtInvoiceNum {
+   crud = Read;
+
+   @DynamicComponentDependency INVOIC
+   reference InvoiceRef(Payer, InvoiceNo) to InvoiceLov(Name, InvoiceNo);
+}
 
 
 --------------------------------- SUMMARIES ---------------------------------

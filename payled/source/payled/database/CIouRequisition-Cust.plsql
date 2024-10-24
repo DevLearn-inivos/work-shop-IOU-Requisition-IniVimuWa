@@ -165,7 +165,7 @@ IS
    
 --   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
 --   SELECT 
-   --line_no_ NUMBER--;
+   line_no_ NUMBER;
    
 BEGIN
    --Add pre-processing code here
