@@ -27,6 +27,7 @@ entity CIouRequisition {
    @DynamicComponentDependency MPCCOM
    reference CBranchManagerRef(BranchManager) to BranchmanagersLov(Userid) {
       label = "Branch Manager";
+       --
    }
    @DynamicComponentDependency MPCCOM
    reference SiteRef(Site) to SiteLov(Contract);
@@ -42,6 +43,7 @@ entity CIouRequisitionLine {
       updatable = [false];
    }
    attribute OverUtilizedAmount Number {
+        --
       required = [false];
       format = ifscurrency;
       fetch = "nvl(C_Iou_Requisition_API.Get_Utilized_Amount(c_iou_number),0)";
@@ -83,6 +85,9 @@ query InvoiceLov {
    from = "Incoming_Invoice2";
    where = "name = Payer";
    attribute InvoiceNo Text;
+   //jihadsfihafsh
+   //test
+   //test
 }
 
 ---------------------------------- ACTIONS ----------------------------------
