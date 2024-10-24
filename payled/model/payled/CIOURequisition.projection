@@ -9,7 +9,7 @@ category Users;
 ----------------------------- MAIN ENTRY POINTS -----------------------------
 entityset IOURequisitionSet for CIouRequisition;
 entityset IOURequisitionLineSet for CIouRequisitionLine;
-entityset VirtInvoiceNumSet for VirtInvoiceNum;
+//entityset VirtInvoiceNumSet for VirtInvoiceNum;
 
 
 ------------------------------ ENTITY DETAILS -------------------------------
@@ -105,11 +105,13 @@ query InvoiceLov {
 
 --------------------------------- VIRTUALS ----------------------------------
 virtual VirtInvoiceNum {
-   crud = Read;
+   attribute Payer Text;
+   attribute InvoiceNum Number;
 
-   @DynamicComponentDependency INVOIC
-   reference InvoiceRef(Payer, InvoiceNo) to InvoiceLov(Name, InvoiceNo);
+   //@DynamicComponentDependency INVOIC
+   //reference InvoiceRef(Payer, InvoiceNo) to InvoiceLov(Name, InvoiceNo);
 }
+
 
 
 --------------------------------- SUMMARIES ---------------------------------

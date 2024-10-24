@@ -25,35 +25,18 @@ page IouRequisitionPage using IOURequisitionSet {
 
 -------------------------------- ASSISTANTS ---------------------------------
 
-//assistant InvoiceNumAssistant using VirtInvoiceNumSet {
-//   label = "Payer - Invoice Number";
-////   input(Payer);
-////   output(InvoiceRef);
-//
-//   singlestep {
-//      list AssistantList;
-//   }
-//   command Cancel {
-//      label = "Close";
-//   }
-//}
-assistant InvoiceNumAssistant using VirtInvoiceNumSet {
-
+assistant InvoiceNumAssistant using IOURequisitionLineSet {
    label = "Payer - Invoice Number";
-
-
+   input(Payer);
+//   output(InvoiceRef);
    singlestep {
-
-      //group CustomerInfo;
       list AssistantList;
-
    }
-
-
-   //command Ok;
-   command Cancel;
-
+   command Cancel {
+      label = "Close";
+   }
 }
+
 
 
 --------------------------------- COMMANDS ----------------------------------
@@ -174,13 +157,8 @@ list IouRequisitionLineList for CIouRequisitionLine {
    }
 }
 
-list AssistantList for VirtInvoiceNum {
-   //   field Payer;
-   @DynamicComponentDependency INVOIC
-   lov InvoiceRef with CInvoiceNumSelecor {
-      label = "Invoice Numbers";
-      size = Medium;
-   }
+list AssistantList for CIouRequisitionLine {
+   field Payer;
 }
 ---------------------------------- DIALOGS ----------------------------------
 
