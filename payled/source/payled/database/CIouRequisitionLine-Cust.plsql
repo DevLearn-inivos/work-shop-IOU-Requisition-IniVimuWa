@@ -18,6 +18,57 @@ layer Cust;
 
 
 -------------------- LU SPECIFIC IMPLEMENTATION METHODS ---------------------
+-- (+) 240918 InivimuWa (START)
+FUNCTION Get_Total_Spent_Amount (c_iou_number_ IN NUMBER 
+                                 )RETURN NUMBER 
+IS 
+   total_spent_amount_ NUMBER;
+   
+   CURSOR Get_Total_Utilized(c_iou_number_ NUMBER)IS 
+   SELECT  sum(irl.amount) amount_      
+   FROM    c_iou_requisition_line irl
+   WHERE   irl.c_iou_number = c_iou_number_;
+
+BEGIN
+   IF c_iou_number_ IS NULL THEN
+    total_spent_amount_ := 0;
+    RETURN total_spent_amount_; 
+   END IF;
+   
+   OPEN Get_Total_Utilized(c_iou_number_);
+   FETCH Get_Total_Utilized INTO total_spent_amount_;
+   CLOSE Get_Total_Utilized;
+   
+   RETURN total_spent_amount_;
+END Get_Total_Spent_Amount; 
+   
+FUNCTION Get_Utilized_Amount(c_iou_number_ IN NUMBER) RETURN NUMBER IS
+   utilized_amount_ NUMBER;
+   allocated_amount_ NUMBER;
+
+   CURSOR Get_Allocated_Amount(c_iou_number_ NUMBER) IS 
+      SELECT irt.float_amount allocated_amount      
+      FROM c_iou_requisition irt
+      WHERE irt.c_iou_number = c_iou_number_; 
+
+BEGIN
+   IF c_iou_number_ IS NULL THEN
+       utilized_amount_ := 0;
+       RETURN utilized_amount_;     
+   END IF;
+   OPEN Get_Allocated_Amount(c_iou_number_);
+   FETCH Get_Allocated_Amount INTO allocated_amount_;
+   CLOSE Get_Allocated_Amount;
+
+   IF allocated_amount_ IS NULL THEN
+      allocated_amount_ := 0;
+   END IF;
+
+   utilized_amount_ := allocated_amount_ - Get_Total_Spent_Amount(c_iou_number_);
+
+   RETURN utilized_amount_;
+END Get_Utilized_Amount;
+-- (+) 240918 InivimuWa (FINISH)
 
 
 -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------

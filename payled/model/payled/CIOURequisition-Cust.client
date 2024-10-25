@@ -19,23 +19,24 @@ page IouRequisitionPage using IOURequisitionSet {
    label = "IOU Requisition";
    selector CIOURequisitionSelector;
    group CIOURequisitionGroup bind CIOURequisitionSelector;
+   //list IouRequisitionLineList;
    group TotalmountsGroup;
-   list IouRequisitionLineList using IOURequisitionLineSet;
+   list IouRequisitionLineList(CIOUArray) bind CIOURequisitionSelector;
 }
 
 -------------------------------- ASSISTANTS ---------------------------------
 
-assistant InvoiceNumAssistant using IOURequisitionLineSet {
-   label = "Payer - Invoice Number";
-   input(Payer);
-//   output(InvoiceRef);
-   singlestep {
-      list AssistantList;
-   }
-   command Cancel {
-      label = "Close";
-   }
-}
+//assistant InvoiceNumAssistant using IOURequisitionLineSet {
+//   label = "Payer - Invoice Number";
+//   input(Payer);
+////   output(InvoiceRef);
+//   singlestep {
+//      list AssistantList;
+//   }
+//   command Cancel {
+//      label = "Close";
+//   }
+//}
 
 
 
@@ -111,17 +112,20 @@ group CIOURequisitionGroup for CIouRequisition {
    }
    field FloatAmount;
 }
-group TotalmountsGroup for CIouRequisitionLine {
+group TotalmountsGroup for CIouRequisition {
 
    label = "Total Amounts ";
    field TotalSpentAmount {
       editable = [false];
    }
    field OverUtilizedAmount {
+      label = "Over Utilized Amount";
       visible = [OverUtilizedAmount > 0];
       editable = [false];
+
    }
    field UnderUtilizedAmount {
+      label = "Under Utilized Amount";
       visible = [UnderUtilizedAmount < 0];
       editable = [false];
    }
@@ -130,7 +134,9 @@ group TotalmountsGroup for CIouRequisitionLine {
 ----------------------------------- LISTS -----------------------------------
 list IouRequisitionLineList for CIouRequisitionLine {
    label = "Settlement";
-   field LineItemNo;
+   field LineItemNo {
+      label = "Line No";
+   }
    field TransactionType;
    field TransactionDate;
    field Amount;
@@ -142,24 +148,32 @@ list IouRequisitionLineList for CIouRequisitionLine {
       label = "Payer";
       size = Medium;
       editable = [TransactionType = "Supplier"];
-      validate command {
-         execute {
-            assistant InvoiceNumAssistant(Payer) {
-               when CANCEL {
-                  exit CANCEL;
-               }
-            }
-         }
-      }
+//      validate command {
+//         execute {
+//            assistant InvoiceNumAssistant(Payer) {
+//               when CANCEL {
+//                  exit CANCEL;
+//               }
+//            }
+//         }
+//      }
    }
-   field InvoiceNo {
+   field Description;
+   lov InvoiceRef with CInvoiceNumSelecor {
+      label = "Invoice No";
+      size = Medium;
       editable = [TransactionType = "Supplier"];
    }
+   /*field InvoiceRef {
+      label = "Invoice No";
+      size = Medium;
+      editable = [TransactionType = "Supplier"];
+   }*/
 }
 
-list AssistantList for CIouRequisitionLine {
-   field Payer;
-}
+//list AssistantList for CIouRequisitionLine {
+//   field Payer;
+//}
 ---------------------------------- DIALOGS ----------------------------------
 
 
