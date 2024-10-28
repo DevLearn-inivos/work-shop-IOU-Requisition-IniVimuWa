@@ -31,7 +31,7 @@ BEGIN
    Database_SYS.Set_Table_Column(columns_, 'GL_ACCOUNT', 'VARCHAR2(100)', 'Y');
    Database_SYS.Set_Table_Column(columns_, 'DESCRIPTION', 'VARCHAR2(1000)', 'N');
    Database_SYS.Set_Table_Column(columns_, 'PAYER', 'VARCHAR2(100)', 'Y');
-   Database_SYS.Set_Table_Column(columns_, 'C_INVOICE_NO', 'NUMBER', 'Y');
+   Database_SYS.Set_Table_Column(columns_, 'C_INVOICE_NO', 'VARCHAR2(100)', 'Y');
    Database_SYS.Set_Table_Column(columns_, 'ROWVERSION', 'DATE', 'N');
    Database_SYS.Set_Table_Column(columns_, 'ROWKEY', 'VARCHAR2(50)', 'N', 'sys_guid()');
    Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_DATA', NULL, TRUE);

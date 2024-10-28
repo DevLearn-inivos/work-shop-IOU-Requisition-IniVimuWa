@@ -82,15 +82,17 @@ END Get_Utilized_Amount;
 PROCEDURE Prepare_Insert___ (
    attr_ IN OUT VARCHAR2 )
 IS
-   CURSOR Get_Max_Iou_Number IS 
+   CURSOR Get_Max_Iou_Number(iou_number NUMBER) IS 
    SELECT NVL(MAX(t.line_item_no),0) 
-   FROM c_iou_requisition_line_tab t;
+   FROM c_iou_requisition_line_tab t
+   WHERE t.c_iou_number= iou_number;
    
    line_no_ NUMBER;
+   iou_number_  NUMBER := client_sys.Get_Item_Value_To_Number('C_IOU_NUMBER',attr_,'CIouRequisition',NULL);
 BEGIN
 
    super(attr_);
-       OPEN Get_Max_Iou_Number;
+   OPEN Get_Max_Iou_Number(iou_number_);
    FETCH Get_Max_Iou_Number INTO line_no_;
    CLOSE Get_Max_Iou_Number;
    

@@ -119,13 +119,13 @@ group TotalmountsGroup for CIouRequisition {
       editable = [false];
    }
    field OverUtilizedAmount {
-      label = "Over Utilized Amount";
+      label = "Under Utilized Amount";
       visible = [OverUtilizedAmount > 0];
       editable = [false];
 
    }
    field UnderUtilizedAmount {
-      label = "Under Utilized Amount";
+      label = "Over Utilized Amount";
       visible = [UnderUtilizedAmount < 0];
       editable = [false];
    }

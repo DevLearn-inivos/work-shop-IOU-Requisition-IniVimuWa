@@ -33,6 +33,12 @@ entity CIouRequisition {
       fetch = "nvl(C_Iou_Requisition_Line_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
+   attribute FloatAmount Number {
+      fetch = "nvl(C_Iou_Requisition_API.Get_Float_Amount(cash_ac),0)";
+      format = ifscurrency;
+      updatable = [false];
+   }
+
    attribute CIouNumber Number {
       label = "IOU Number";
    }

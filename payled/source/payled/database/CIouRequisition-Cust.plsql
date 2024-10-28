@@ -146,7 +146,25 @@ BEGIN
 END Get_Iou_Number;
    
   -- (+) 241021 InivimuWa (FINISH)
-  
+
+FUNCTION Get_Float_Amount(cash_ac VARCHAR2) RETURN NUMBER 
+IS
+   float_amount_ NUMBER;
+   
+   CURSOR Get_Float_Amount_Cursor(cash_ac_ VARCHAR2) IS
+       SELECT SUM(t.c_allocated_iou_amount) 
+       FROM cash_account t 
+       WHERE t.institute_id = cash_ac_;
+   
+BEGIN
+   OPEN Get_Float_Amount_Cursor(cash_ac);
+   FETCH Get_Float_Amount_Cursor INTO float_amount_;
+   CLOSE Get_Float_Amount_Cursor;
+   
+   RETURN NVL(float_amount_, 0); 
+END Get_Float_Amount;
+
+   
   -- (+) 241014 InivimuWa (FINISH)
    -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
    
