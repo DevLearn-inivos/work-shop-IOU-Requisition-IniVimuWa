@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 --
---  Logical unit: CashAccount
+--  Logical unit: CashBoxLumpSum
 --  Component:    PAYLED
 --
 --  IFS Developer Studio Template Version 3.0
@@ -18,9 +18,6 @@ layer Cust;
 
 
 -------------------- LU SPECIFIC IMPLEMENTATION METHODS ---------------------
-
-
-
 
 
 -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------

@@ -41,6 +41,62 @@ TYPE C_User_Id_Rec_ IS RECORD (
 
 
 -------------------- LU SPECIFIC IMPLEMENTATION METHODS ---------------------
+@Override
+PROCEDURE Prepare_Insert___ (
+   attr_ IN OUT VARCHAR2 )
+IS
+   CURSOR Get_Max_Iou_Number IS 
+   SELECT NVL(MAX(t.c_iou_number),0) 
+   FROM c_iou_requisition_tab t;
+   
+--   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
+--   SELECT 
+   line_no_ NUMBER;
+   
+BEGIN
+   --Add pre-processing code here
+   super(attr_);
+   
+   OPEN Get_Max_Iou_Number;
+   FETCH Get_Max_Iou_Number INTO line_no_;
+   CLOSE Get_Max_Iou_Number;
+   
+   IF line_no_ IS NULL THEN
+      line_no_ := 0;
+   END IF;  
+   line_no_ := line_no_ + 1;
+   Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
+   
+   
+   --Add post-processing code here
+END Prepare_Insert___;
+
+@Override 
+PROCEDURE Insert___ (
+   objid_      OUT    VARCHAR2,
+   objversion_ OUT    VARCHAR2,
+   newrec_     IN OUT c_iou_requisition_tab%ROWTYPE,
+   attr_       IN OUT VARCHAR2 )
+IS
+BEGIN
+   newrec_.float_amount := nvl(C_Iou_Requisition_API.Get_Float_Amount(newrec_.cash_ac),0);
+   super(objid_, objversion_, newrec_, attr_);
+   --Add post-processing code here
+END Insert___;
+
+
+
+
+   -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
+   
+   
+   -------------------- LU SPECIFIC PROTECTED METHODS --------------------------
+   
+   
+-------------------- LU SPECIFIC PUBLIC METHODS -----------------------------
+
+   
+-------------------- LU CUST NEW METHODS -------------------------------------
 -- (+) 240918 InivimuWa (START)
 FUNCTION Get_Total_Spent_Amount (c_iou_number_ IN NUMBER 
                                  )RETURN NUMBER 
@@ -166,51 +222,3 @@ END Get_Float_Amount;
 
    
   -- (+) 241014 InivimuWa (FINISH)
-   -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
-   
-   
-   -------------------- LU SPECIFIC PROTECTED METHODS --------------------------
-   
-   
-   -------------------- LU SPECIFIC PUBLIC METHODS -----------------------------
-@Override
-PROCEDURE Prepare_Insert___ (
-   attr_ IN OUT VARCHAR2 )
-IS
-   CURSOR Get_Max_Iou_Number IS 
-   SELECT NVL(MAX(t.c_iou_number),0) 
-   FROM c_iou_requisition_tab t;
-   
---   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
---   SELECT 
-   line_no_ NUMBER;
-   
-BEGIN
-   --Add pre-processing code here
-   super(attr_);
-   
-   OPEN Get_Max_Iou_Number;
-   FETCH Get_Max_Iou_Number INTO line_no_;
-   CLOSE Get_Max_Iou_Number;
-   
-   IF line_no_ IS NULL THEN
-      line_no_ := 0;
-   END IF;  
-   line_no_ := line_no_ + 1;
-   Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
-   
-   
-   --Add post-processing code here
-END Prepare_Insert___;
-
-
-
-
-
-
-
-
-
-   
-   -------------------- LU CUST NEW METHODS -------------------------------------
-   

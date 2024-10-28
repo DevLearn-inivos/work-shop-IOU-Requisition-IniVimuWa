@@ -52,7 +52,7 @@ command Cancel for CIouRequisitionLine {
 selector CIOURequisitionSelector for CIouRequisition {
 
    label = "Cash A/C - ${CashAc}";
-   field CashAc;
+   field CIouNumber;
    field BranchManager;
    field CIouAmount;
 }

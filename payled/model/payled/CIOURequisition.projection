@@ -15,45 +15,55 @@ entityset IOURequisitionLineSet for CIouRequisitionLine;
 ------------------------------ ENTITY DETAILS -------------------------------
 @Override
 entity CIouRequisition {
+
    attribute TotalSpentAmount Number {
       required = [false];
       format = ifscurrency;
       fetch = "nvl(C_Iou_Requisition_Line_API.Get_Total_Spent_Amount(c_iou_number),0)";
       updatable = [false];
    }
+
    attribute OverUtilizedAmount Number {
       required = [false];
       format = ifscurrency;
       fetch = "nvl(C_Iou_Requisition_Line_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
+
    attribute UnderUtilizedAmount Number {
       required = [false];
       format = ifscurrency;
       fetch = "nvl(C_Iou_Requisition_Line_API.Get_Utilized_Amount(c_iou_number),0)";
       updatable = [false];
    }
+
    attribute FloatAmount Number {
       fetch = "nvl(C_Iou_Requisition_API.Get_Float_Amount(cash_ac),0)";
       format = ifscurrency;
-      updatable = [false];
+      updatable = [true];
    }
+
 
    attribute CIouNumber Number {
       label = "IOU Number";
    }
+
    reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
       label = "Cash Accounts";
    }
+
    @DynamicComponentDependency PERSON
    reference RequestedByRef(RequestedBy) to CompanyPerson(EmpNo) {
       label = "Requested By";
    }
+
    @DynamicComponentDependency MPCCOM
    reference CBranchManagerRef(BranchManager) to BranchmanagersLov(Userid) {
       label = "Branch Manager";
        --
    }
+
+
    @DynamicComponentDependency MPCCOM
    reference SiteRef(Site) to SiteLov(Contract);
 
@@ -62,13 +72,17 @@ entity CIouRequisition {
 @Override
 entity CIouRequisitionLine {
 
-   attribute TransactionType Enumeration(TransactionTypeEnum) {
-      default = "'Cash'";
-      fetch = "''";
-   }
+//   attribute TransactionType Enumeration(TransactionTypeEnum) {
+//      default = "'Cash'";
+//      fetch = "''";
+//   }
+
    attribute LineItemNo Number {
       label = "Line Item No";
    }
+
+   //attribute TransactionType Enumeration(TransactionTypeEnum);
+
    @DynamicComponentDependency ACCRUL
    reference GLAccountRef(GlAccount) to Account(Account);
 
@@ -79,10 +93,6 @@ entity CIouRequisitionLine {
    reference InvoiceRef(Payer, CInvoiceNo) to InvoiceLov(Name, InvoiceNo) {
       label = "Invoice No";
    }
-   //reference IouNumbRef(CIouNumber) to CIouRequisition(CIouNumber);
-//   attribute CIouNumber Text {
-//      fetch = "SelectSnippet";
-//   }
 
 }
 ------------------------------- ENUMERATIONS --------------------------------
@@ -107,26 +117,16 @@ query InvoiceLov {
    attribute InvoiceNo Text;
 }
 
----------------------------------- ACTIONS ----------------------------------
 
+
+---------------------------------- ACTIONS ----------------------------------
 
 --------------------------------- FUNCTIONS ---------------------------------
 
 -------------------------------- STRUCTURES ---------------------------------
 
-
 --------------------------------- VIRTUALS ----------------------------------
-//virtual VirtInvoiceNum {
-//   attribute Payer Text;
-//   attribute InvoiceNum Number;
-
-   //@DynamicComponentDependency INVOIC
-   //reference InvoiceRef(Payer, InvoiceNo) to InvoiceLov(Name, InvoiceNo);
-//}
-
-
 
 --------------------------------- SUMMARIES ---------------------------------
-
 
 -------------------------------- SINGLETONS ---------------------------------

@@ -10,7 +10,7 @@ layer Cust;
 
 ------------------------------ ENTITY DETAILS -------------------------------
 @Override
-entity CashBox {
+entity CashBoxLumpSump {
    attribute CIouNumber Number;
 }
 ------------------------------- ENUMERATIONS --------------------------------

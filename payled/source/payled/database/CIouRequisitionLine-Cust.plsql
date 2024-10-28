@@ -47,7 +47,7 @@ FUNCTION Get_Utilized_Amount(c_iou_number_ IN NUMBER) RETURN NUMBER IS
    allocated_amount_ NUMBER;
 
    CURSOR Get_Allocated_Amount(c_iou_number_ NUMBER) IS 
-      SELECT irt.float_amount allocated_amount      
+      SELECT irt.float_amount       
       FROM c_iou_requisition irt
       WHERE irt.c_iou_number = c_iou_number_; 
 
