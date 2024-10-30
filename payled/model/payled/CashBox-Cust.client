@@ -21,11 +21,11 @@ layer Cust;
 
 ----------------------------------- LISTS -----------------------------------
 @Override
-list CashBoxTransactionsList for CashBoxLumpSump {
-   field CIouNumber;
+list CashBoxTransactionsList for CashBoxLumpSum {
+   field CIouNumber {
+      label = "IOU Number";
+   }
 }
-
-
 ---------------------------------- DIALOGS ----------------------------------
 
 

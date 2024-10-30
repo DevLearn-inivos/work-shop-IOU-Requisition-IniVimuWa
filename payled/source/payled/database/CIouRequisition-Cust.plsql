@@ -16,27 +16,27 @@ layer Cust;
 -- (+) 240924 InivimuWa (START)
 TYPE Branch_Manager_Rec_ IS RECORD
    (branch_manager VARCHAR2(100)
-   );
+    );
 -- (+) 240924 InivimuWa (FINISH)
 
-  -- (+) 240925 InivimuWa (START)
+-- (+) 240925 InivimuWa (START)
 TYPE C_Status_Rec_ IS RECORD (
    status1  VARCHAR2(100),
    status2  VARCHAR2(100),
    status3  VARCHAR2(100) 
-);
+   );
 
 -- (+) 241014 InivimuWa (START)
 TYPE C_Site_Rec_ IS RECORD (
    site VARCHAR2(100)
-);
+   );
 
 TYPE C_User_Id_Rec_ IS RECORD (
    user_id VARCHAR2(100)
-); 
+   ); 
 -- (+) 241014 InivimuWa (FINISH)
 
-  -- (+) 240925 InivimuWa (FINISH)
+-- (+) 240925 InivimuWa (FINISH)
 -------------------- PRIVATE DECLARATIONS -----------------------------------
 
 
@@ -49,12 +49,10 @@ IS
    SELECT NVL(MAX(t.c_iou_number),0) 
    FROM c_iou_requisition_tab t;
    
---   CURSOR Get_Float_Amount(cash_ac_ VARCHAR2 );
---   SELECT 
    line_no_ NUMBER;
    
 BEGIN
-   --Add pre-processing code here
+   
    super(attr_);
    
    OPEN Get_Max_Iou_Number;
@@ -66,9 +64,8 @@ BEGIN
    END IF;  
    line_no_ := line_no_ + 1;
    Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
+   Client_SYS.Add_To_Attr('STATUS',C_Iou_Requisition_Enum_API.Get_Client_Value(0),attr_);
    
-   
-   --Add post-processing code here
 END Prepare_Insert___;
 
 @Override 
@@ -81,21 +78,19 @@ IS
 BEGIN
    newrec_.float_amount := nvl(C_Iou_Requisition_API.Get_Float_Amount(newrec_.cash_ac),0);
    super(objid_, objversion_, newrec_, attr_);
-   --Add post-processing code here
+ 
 END Insert___;
 
 
+-------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
 
 
-   -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
-   
-   
-   -------------------- LU SPECIFIC PROTECTED METHODS --------------------------
-   
-   
+-------------------- LU SPECIFIC PROTECTED METHODS --------------------------
+
+
 -------------------- LU SPECIFIC PUBLIC METHODS -----------------------------
 
-   
+
 -------------------- LU CUST NEW METHODS -------------------------------------
 -- (+) 240918 InivimuWa (START)
 FUNCTION Get_Total_Spent_Amount (c_iou_number_ IN NUMBER 
@@ -107,11 +102,11 @@ IS
    SELECT  sum(irl.amount) amount_      
    FROM    c_iou_requisition_line_tab irl
    WHERE   irl.c_iou_number = c_iou_number_;
-
+   
 BEGIN
    IF c_iou_number_ IS NULL THEN
-    total_spent_amount_ := 0;
-    RETURN total_spent_amount_; 
+      total_spent_amount_ := 0;
+      RETURN total_spent_amount_; 
    END IF;
    
    OPEN Get_Total_Utilized(c_iou_number_);
@@ -120,70 +115,59 @@ BEGIN
    
    RETURN total_spent_amount_;
 END Get_Total_Spent_Amount; 
-   
+
 FUNCTION Get_Utilized_Amount(c_iou_number_ IN NUMBER) RETURN NUMBER IS
    utilized_amount_ NUMBER;
    allocated_amount_ NUMBER;
-
+   
    CURSOR Get_Allocated_Amount(c_iou_number_ NUMBER) IS 
       SELECT irt.c_iou_amount allocated_amount      
       FROM c_iou_requisition_tab irt
       WHERE irt.c_iou_number = c_iou_number_; 
-
+   
 BEGIN
    IF c_iou_number_ IS NULL THEN
-       utilized_amount_ := 0;
-       RETURN utilized_amount_;     
+      utilized_amount_ := 0;
+      RETURN utilized_amount_;     
    END IF;
    OPEN Get_Allocated_Amount(c_iou_number_);
    FETCH Get_Allocated_Amount INTO allocated_amount_;
    CLOSE Get_Allocated_Amount;
-
+   
    IF allocated_amount_ IS NULL THEN
       allocated_amount_ := 0;
    END IF;
-
+   
    utilized_amount_ := allocated_amount_ - Get_Total_Spent_Amount(c_iou_number_);
-
+   
    RETURN utilized_amount_;
 END Get_Utilized_Amount;
 -- (+) 240918 InivimuWa (FINISH)
-  
-  -- (+) 241014 InivimuWa (START)
+
+-- (+) 241014 InivimuWa (START)
 FUNCTION Get_Site RETURN C_Site_Rec_ 
 IS 
    site_ C_Site_Rec_ ;
-   --user_id_ VARCHAR2(100);
-   
+  
    CURSOR Get_Sites IS
    SELECT t.contract 
    FROM user_allowed_site t
    WHERE t.c_branch_manager='True';
    
---   CURSOR Get_User_Id IS
---   SELECT v.userid 
-  -- FROM user_default v 
-   --WHERE v.c_branch_manager='True'--;
    
 BEGIN
-   --OPEN Get_User_Id ;
-     -- LOOP 
-       --  FETCH Get_User_Id INTO user_id_;
-        -- EXIT WHEN Get_User_Id%NOTFOUND;
-            OPEN Get_Sites;
-            LOOP 
-            FETCH Get_Sites INTO site_;
-            EXIT WHEN Get_Sites%NOTFOUND;
-            --CLOSE Get_Sites;
-         --CLOSE Get_User_Id;
-          END LOOP;
-      CLOSE Get_Sites; 
-   --END LOOP;
-   --CLOSE Get_User_Id; 
-   RETURN site_; 
+   OPEN Get_Sites;
+LOOP 
+   FETCH Get_Sites INTO site_;
+   EXIT WHEN Get_Sites%NOTFOUND;
+   
+END LOOP;
+CLOSE Get_Sites; 
+
+RETURN site_; 
 END Get_Site;
 
-  -- (+) 241021 InivimuWa (START)
+-- (+) 241021 InivimuWa (START)
 FUNCTION Get_Iou_Number RETURN NUMBER 
 IS 
    current_iou_ NUMBER;
@@ -195,13 +179,13 @@ IS
 BEGIN
    OPEN Get_Max_Iou_Number ;
    FETCH Get_Max_Iou_Number INTO current_iou_ ;
-
+   
    next_val_ := current_iou_ + 1;
    CLOSE Get_Max_Iou_Number;
    RETURN next_val_;
 END Get_Iou_Number;
-   
-  -- (+) 241021 InivimuWa (FINISH)
+
+-- (+) 241021 InivimuWa (FINISH)
 
 FUNCTION Get_Float_Amount(cash_ac VARCHAR2) RETURN NUMBER 
 IS
@@ -220,5 +204,4 @@ BEGIN
    RETURN NVL(float_amount_, 0); 
 END Get_Float_Amount;
 
-   
-  -- (+) 241014 InivimuWa (FINISH)
+-- (+) 241014 InivimuWa (FINISH)

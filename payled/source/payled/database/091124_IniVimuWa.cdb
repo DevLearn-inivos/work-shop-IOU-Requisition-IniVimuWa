@@ -84,7 +84,7 @@ DECLARE
    column_     Database_SYS.ColRec;
 BEGIN
    Database_SYS.Reset_Column_Table(columns_);
-   Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'NUMBER', 'Y');
+    Database_SYS.Set_Table_Column(columns_, 'C_IOU_NUMBER', 'NUMBER', 'Y');
    Database_SYS.Create_Or_Replace_Table(table_name_, columns_, '&IFSAPP_DATA', NULL, TRUE);
 END;
 -- [END IFS COMPLETE BLOCK]
