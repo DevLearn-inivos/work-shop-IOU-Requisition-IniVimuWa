@@ -49,9 +49,22 @@ IS
    SELECT NVL(MAX(t.c_iou_number),0) 
    FROM c_iou_requisition_tab t;
    
+   CURSOR Get_Site(cash_ac VARCHAR2 )IS 
+   SELECT DISTINCT(t.c_site) 
+   FROM cash_account t 
+   WHERE t.institute_id=cash_ac
+   AND t.c_site IS NOT NULL;
+   
+   site_ VARCHAR2(100);
    line_no_ NUMBER;
    
 BEGIN
+   OPEN Get_Site(Client_SYS.Get_Item_Value_To_Number('C_IOU_NUMBER',attr_,'CIouRequisition',NULL));
+   FETCH Get_Site INTO site_; 
+   CLOSE Get_Site;
+   IF (Client_SYS.Get_Item_Value('SITE',attr_) != site_) THEN 
+      Error_SYS.record_general('','test');
+   END IF;
    
    super(attr_);
    
@@ -75,10 +88,12 @@ PROCEDURE Insert___ (
    newrec_     IN OUT c_iou_requisition_tab%ROWTYPE,
    attr_       IN OUT VARCHAR2 )
 IS
+    
 BEGIN
+   
    newrec_.float_amount := nvl(C_Iou_Requisition_API.Get_Float_Amount(newrec_.cash_ac),0);
    super(objid_, objversion_, newrec_, attr_);
- 
+   
 END Insert___;
 
 
@@ -148,7 +163,7 @@ END Get_Utilized_Amount;
 FUNCTION Get_Site RETURN C_Site_Rec_ 
 IS 
    site_ C_Site_Rec_ ;
-  
+   
    CURSOR Get_Sites IS
    SELECT t.contract 
    FROM user_allowed_site t

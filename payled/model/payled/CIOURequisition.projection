@@ -48,6 +48,11 @@ entity CIouRequisition {
       label = "IOU Number";
    }
 
+   attribute CIouAmount Number {
+      format = ifscurrency;
+   }
+
+
    reference CashAccountRef(CashAc) to CashAccount(InstituteId) {
       label = "Cash Accounts";
    }
@@ -60,7 +65,6 @@ entity CIouRequisition {
    @DynamicComponentDependency MPCCOM
    reference CBranchManagerRef(BranchManager) to BranchmanagersLov(Userid) {
       label = "Branch Manager";
-       --
    }
 
 
@@ -80,6 +84,10 @@ entity CIouRequisitionLine {
    attribute LineItemNo Number {
       label = "Line Item No";
    }
+   attribute Amount Number {
+      format = ifscurrency;
+   }
+
 
    //attribute TransactionType Enumeration(TransactionTypeEnum);
 

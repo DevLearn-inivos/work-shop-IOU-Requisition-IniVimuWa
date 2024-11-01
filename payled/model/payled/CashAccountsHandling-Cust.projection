@@ -11,8 +11,13 @@ layer Cust;
 ------------------------------ ENTITY DETAILS -------------------------------
 @Override
 entity CashAccount {
-   attribute CAllocatedIouAmount Number;
+   attribute CAllocatedIouAmount Number {
+      format = ifscurrency;
+   }
    attribute CSite Text;
+
+   @DynamicComponentDependency ENTERP
+   reference SiteRef(CSite) to CompanySite(Contract);
 
 }
 

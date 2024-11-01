@@ -25,7 +25,9 @@ list CashAccountsList for CashAccount {
    field CAllocatedIouAmount {
       label = "Allocated IOU Amount";
    }
-   field CSite {
+   field SiteRef {
+      editable = [true];
+
       label = "Site";
    }
 }
