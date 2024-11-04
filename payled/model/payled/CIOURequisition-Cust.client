@@ -46,6 +46,13 @@ command Cancel for CIouRequisitionLine {
       exit CANCEL;
    }
 }
+command TransferToCashBox for CIouRequisitionLine {
+   label = "Transfer To Cash Box";
+   execute {
+      exit;
+   }
+
+}
 
 --------------------------------- SELECTORS ---------------------------------
 

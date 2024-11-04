@@ -1,6 +1,10 @@
 client CashBox;
 component PAYLED;
 layer Cust;
+description "test ";
+
+//projection CashBoxHandeling;
+
 
 
 --------------------------------- FRAGMENTS ---------------------------------

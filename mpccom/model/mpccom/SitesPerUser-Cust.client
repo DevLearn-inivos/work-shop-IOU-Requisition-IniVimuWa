@@ -19,11 +19,9 @@ layer Cust;
 ---------------------------------- GROUPS -----------------------------------
 @Override
 list SiteList for UserAllowedSite {
-   //editmode = SingleCellEdit;
    field CBranchManager {
       label = "Branch Manager";
       editable = [true];
-      //required = [true];
    }
 }
 ----------------------------------- LISTS -----------------------------------

@@ -1,7 +1,8 @@
-projection SitesPerUserHandling;
-component MPCCOM;
+projection CashBoxHandling;
+component PAYLED;
 layer Cust;
-description " ";
+description " test ";
+
 
 
 --------------------------------- FRAGMENTS ---------------------------------
@@ -10,14 +11,11 @@ description " ";
 
 
 ------------------------------ ENTITY DETAILS -------------------------------
-
 @Override
-entity UserAllowedSite {
-   attribute CBranchManager Boolean("TRUE", "FALSE") {
-      editable = [true];
-      label = "Branch Manager";
-   }
+entity CashBoxLumpSum {
+   attribute CIouNumber Number;
 }
+
 
 
 ------------------------------- ENUMERATIONS --------------------------------

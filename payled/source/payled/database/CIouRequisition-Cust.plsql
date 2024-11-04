@@ -49,22 +49,13 @@ IS
    SELECT NVL(MAX(t.c_iou_number),0) 
    FROM c_iou_requisition_tab t;
    
-   CURSOR Get_Site(cash_ac VARCHAR2 )IS 
-   SELECT DISTINCT(t.c_site) 
-   FROM cash_account t 
-   WHERE t.institute_id=cash_ac
-   AND t.c_site IS NOT NULL;
    
-   site_ VARCHAR2(100);
+   
+   
    line_no_ NUMBER;
    
 BEGIN
-   OPEN Get_Site(Client_SYS.Get_Item_Value_To_Number('C_IOU_NUMBER',attr_,'CIouRequisition',NULL));
-   FETCH Get_Site INTO site_; 
-   CLOSE Get_Site;
-   IF (Client_SYS.Get_Item_Value('SITE',attr_) != site_) THEN 
-      Error_SYS.record_general('','test');
-   END IF;
+   
    
    super(attr_);
    
@@ -79,6 +70,8 @@ BEGIN
    Client_SYS.Add_To_Attr('C_IOU_NUMBER', line_no_, attr_);
    Client_SYS.Add_To_Attr('STATUS',C_Iou_Requisition_Enum_API.Get_Client_Value(0),attr_);
    
+
+   
 END Prepare_Insert___;
 
 @Override 
@@ -88,13 +81,30 @@ PROCEDURE Insert___ (
    newrec_     IN OUT c_iou_requisition_tab%ROWTYPE,
    attr_       IN OUT VARCHAR2 )
 IS
-    
+   CURSOR Get_Site(cash_ac VARCHAR2) IS 
+      SELECT DISTINCT(t.c_site) 
+      FROM cash_account t 
+      WHERE t.institute_id = cash_ac
+      AND t.c_site IS NOT NULL;
+   
+   site_ VARCHAR2(100);
+   
 BEGIN
    
-   newrec_.float_amount := nvl(C_Iou_Requisition_API.Get_Float_Amount(newrec_.cash_ac),0);
+   newrec_.float_amount := NVL(C_Iou_Requisition_API.Get_Float_Amount(newrec_.cash_ac), 0);
+   
+   OPEN Get_Site(newrec_.cash_ac);
+   FETCH Get_Site INTO site_;
+   CLOSE Get_Site;
+   
+   IF ( newrec_.site != site_) THEN 
+      Error_SYS.record_general('', 'You do not have permission');
+   END IF;
+   
    super(objid_, objversion_, newrec_, attr_);
    
 END Insert___;
+
 
 
 -------------------- LU SPECIFIC PRIVATE METHODS ----------------------------
